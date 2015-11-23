@@ -171,33 +171,33 @@
               <label for="input-name">Business Name</label>
             </div>
             <!-- /Business Name -->
-    <!-- Business Category -->
-            <div class="input-field">
-              <input id="input-name" type="text" required>
-              <label for="input-name">Business Category</label>
-            </div>
-            <!-- /Business Category -->
-    <!-- Location -->
-            <div class="input-field">
-              <input id="input-name" type="text" required>
-              <label for="input-name">Location</label>
-            </div>
-            <!-- /Location -->
-    <!-- Zip Code -->
-            <div class="input-field">
-              <input id="input-name" type="text" required>
-              <label for="input-name">Zip Code</label>
-            </div>
-            <!-- /Zip Code -->
-    <!-- Heard -->
-            <select name="heard" required>
-              <option value="" disabled selected>Which Services Do You Provide</option>
-              <option value="press">Food</option>
-              <option value="internet">Internet</option>
-              <option value="mouth">Mobile</option>
-              <option value="other">Other...</option>
+            <!-- Business Category  -->
+            <select name="businessType" required id="businessType" onchange="getServices();">
+              <option value="" disabled selected>Which business you want to open?</option>
+              <option value="restaurants">Restaurants</option>
+              <option value="pubandbar">Pubs & Bar</option>
+              <option value="shoppingmall">Shopping Mall</option>
+              <option value="healthcare">Health Care</option>
             </select>
-            <!-- /Heard -->
+            <!-- /Business Category  -->
+    <!-- -->
+            <label class="pull-left">Types (2 minimum):</label>
+            <p>Services</p>
+  <p id="serviceSelect">
+    
+  </p>
+            
+    
+    <!-- Zip Code -->
+            <select name="zipcode" required>
+              <option value="" disabled selected>Zip Code</option>
+              <option value="restaurants">95112</option>
+              <option value="pubandbar">95113</option>
+              <option value="shoppingmall">95114</option>
+              <option value="healthcare">95116</option>
+            </select>
+            <!-- /Zip Code -->
+    
             
             
 <div class="input-field">
@@ -256,95 +256,7 @@ Open Hours Sat-Sun:
       
   <!-- /Main Content -->
 
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <div class="layer-overlay"></div>
-    <div class="layer-content">
-      <form action="#!">
-        <!-- Header -->
-        <a class="search-bar-toggle grey-text text-darken-2" href="#!"><i class="mdi-navigation-close"></i></a>
-
-        <!-- Search Input -->
-        <div class="input-field">
-          <i class="mdi-action-search prefix"></i>
-          <input type="text" name="con-search" placeholder="Search...">
-        </div>
-
-        <!-- Search Results -->
-        <div class="search-results">
-
-          <div class="row">
-            <div class="col s12 l4">
-              <h4>Users</h4>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user2.jpg" alt="Felecia Castro" class="circle photo">
-                <div class="title">Felecia Castro</div>
-                <div class="label">Content Manager</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user3.jpg" alt="Max Brooks" class="circle photo">
-                <div class="title">Max Brooks</div>
-                <div class="label">Programmer</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user4.jpg" alt="Patsy Griffin" class="circle photo">
-                <div class="title">Patsy Griffin</div>
-                <div class="label">Support</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user6.jpg" alt="Vernon Garrett" class="circle photo">
-                <div class="title">Vernon Garrett</div>
-                <div class="label">Photographer</div>
-              </div>
-            </div>
-            <div class="col s12 l4">
-              <h4>Articles</h4>
-
-              <div class="each-result">
-                <div class="icon circle blue white-text">MD</div>
-                <div class="title">Material Design</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle teal white-text">
-                  <i class="fa fa-dashboard"></i>
-                </div>
-                <div class="title">Admin Dashboard</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle orange white-text">RD</div>
-                <div class="title">Responsive Design</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle red white-text">
-                  <i class="fa fa-tablet"></i>
-                </div>
-                <div class="title">Mobile First</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-            </div>
-            <div class="col s12 l4">
-              <h4>Posts</h4>
-
-              <div class="no-result">No results were found ;(</div>
-            </div>
-          </div>
-
-        </div>
-
-      </form>
-    </div>
-  </div>
-  <!-- /Search Bar -->
+ 
 
 
 
@@ -534,11 +446,11 @@ var htmlstar="<div class='rating'>"+
     (function() {
       var chart = $("#flotPieChart");
       var data = [
-          { label: "IE",  data: 19.5, color: "#90a4ae"},
-          { label: "Safari",  data: 4.5, color: "#7986cb"},
-          { label: "Firefox",  data: 36.6, color: "#9575cd"},
-          { label: "Opera",  data: 2.3, color: "#4db6ac"},
-          { label: "Chrome",  data: 36.3, color: "#64b5f6"}
+          { label: "5",  data: 19.5, color: "#90a4ae"},
+          { label: "4",  data: 4.5, color: "#7986cb"},
+          { label: "3",  data: 36.6, color: "#9575cd"},
+          { label: "2",  data: 2.3, color: "#4db6ac"},
+          { label: "1",  data: 36.3, color: "#64b5f6"}
       ];
       var options = {
         series: {
@@ -632,7 +544,35 @@ var htmlstar="<div class='rating'>"+
     }(jQuery));
     
     
-   
+   function getServices(){
+	   var selectedopt=$("#businessType").val();
+	   switch(selectedopt) {
+	    case "restaurants":
+	var htmlstar='<input name="check-hobbies" type="checkbox" id="check-take" value="takeout" />'+
+	'<label for="check-take">Take out</label>'+
+	'<input name="check-hobbies" type="checkbox" id="check-wifi" value="wifi" />'+
+	'<label for="check-wifi">wifi</label>'+
+	'<input name="check-hobbies" type="checkbox" id="check-alcohol" value="alcohol" />'+
+	'<label for="check-alcohol">alcohol</label>'+
+	'<input name="check-hobbies" type="checkbox" id="check-parking" value="parking" />'+
+	'<label for="check-parking">parking</label>'+
+	'<input name="check-hobbies" type="checkbox" id="check-dinner" value="dinner" />'+
+	'<label for="check-dinner">dinner</label>';
+				$("#serviceSelect").empty();
+				$("#serviceSelect").append(htmlstar);
+	        break;
+	    case "pubandbar":
+	    	var htmlstar='<input name="check-hobbies" type="checkbox" id="check-alcohol1" value="alcohol" />'+
+	    	'<label for="check-alcohol1">alcohol</label>'+
+	    	'<input name="check-hobbies" type="checkbox" id="check-dancing" value="dancing" />'+
+	    	'<label for="check-dancing">Dancing Floor</label>'+
+	    	'<input name="check-hobbies" type="checkbox" id="check-noiselevel" value="noiselevel" />'+
+	    	'<label for="check-noiselevel">noise level</label>';
+	    				$("#serviceSelect").empty();
+	    				$("#serviceSelect").append(htmlstar);
+	    	        break;
+	   }
+   }
     
     </script>
 </body>
