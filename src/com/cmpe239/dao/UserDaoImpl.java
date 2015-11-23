@@ -97,6 +97,47 @@ public class UserDaoImpl implements UserDao {
 		        return user;
 			
 	}
+	
+	public int getLastUserID()
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		Query query = session.createSQLQuery(
+				"select MAX(userID) from USER_INFORMATION");
+		
+		List result = query.list();
+		int userid = (int) result.get(0);
+		System.out.println(userid);
+		
+		return userid;
+	}
+
+	@Override
+	public UserEntity insertNewUser() {
+		// TODO Auto-generated method stub
+		UserEntity ue = new UserEntity();
+		ue.setUseremail("akanksha.nagpal@sjsu.edu");
+		ue.setPassword("123456");
+		ue.setUsertype("user");
+		
+		
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		UserDaoImpl userDao = new UserDaoImpl();
+		
+		int userid = userDao.getLastUserID() + 1;
+		ue.setUserID(userid);
+		
+		session.beginTransaction();
+		session.save(ue);
+		session.getTransaction().commit();
+		session.close();
+		
+		return ue;
+		
+	}
 
 
 }

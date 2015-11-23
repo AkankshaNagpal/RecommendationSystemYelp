@@ -163,6 +163,25 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping("/SignupSuccess")
+	public String getUserJSON(Model model)
+	{
+		UserDaoImpl userDao = new UserDaoImpl();
+		UserEntity userEn = userDao.insertNewUser();
+		
+		if(userEn != null)
+		{
+		model.addAttribute("newuserProfile",userEn);
+		}
+		else
+		{
+		model.addAttribute("errorMessage", "Please enter valid username and password");
+		}
+		
+		return "jsonTemplate";
+	}
+	
+	
 
 	
 }
