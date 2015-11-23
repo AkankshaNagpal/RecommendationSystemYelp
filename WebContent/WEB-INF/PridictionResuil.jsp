@@ -156,11 +156,10 @@
 
     </div>
     <!-- /Breadcrumb -->
-Here we go
 
 
     <br/>
-    
+
     <div class="row">
     <!-- form -->
     <div class="col s12 l5">
@@ -235,8 +234,13 @@ Open Hours Sat-Sun:
     </div>
     </div>
     <div class="col s12 l7">
+    <div class="card-panel">
+    <h4>Line</h4>
+          <div id="rickshawLine" ></div>
+    </div>
     <div class="card-panel center-align">
-    <h4>Pie Chart</h4>
+    
+        <h4>Pie Chart</h4>
           <div id="flotPieChart" style="height: 400px"></div>
     </div>
     </div>
@@ -376,9 +380,157 @@ Open Hours Sat-Sun:
   <script type="text/javascript" src="assets/flot/jquery.flot.pie.min.js"></script>
   <script type="text/javascript" src="assets/flot/jquery.flot.tooltip.min.js"></script>
   <script type="text/javascript" src="assets/flot/jquery.flot.categories.min.js"></script>
+    <script type="text/javascript" src="assets/d3/d3.min.js"></script>
+    <script type="text/javascript" src="assets/rickshaw/rickshaw.min.js"></script>
       <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script type="text/javascript" src="assets/gmaps/gmaps.min.js"></script>
     <script>
+	function makestars(y){
+		var inty=Math.floor(y);
+
+		switch(inty) {
+    case 1:
+var htmlstar="<div class='rating'>"+
+              "<input id='rating-star-5' name='rating-star' value='5' type='radio'>"+
+              "<label for='rating-star-5'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-4' name='rating-star' value='4'  type='radio'>"+
+              "<label for='rating-star-4'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-3' name='rating-star' value='3'   type='radio'>"+
+              "<label for='rating-star-3'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-2' name='rating-star' value='2' type='radio'>"+
+              "<label for='rating-star-2'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-1' name='rating-star' value='1' checked=''  type='radio'>"+
+              "<label for='rating-star-1'><i class='ion-star'></i>"+
+              "</label>"+
+            "</div>";
+						return htmlstar;
+        break;
+    case 2:
+var htmlstar="<div class='rating'>"+
+              "<input id='rating-star-5' name='rating-star' value='5' type='radio'>"+
+              "<label for='rating-star-5'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-4' name='rating-star' value='4'  type='radio'>"+
+              "<label for='rating-star-4'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-3' name='rating-star' value='3'   type='radio'>"+
+              "<label for='rating-star-3'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-2' name='rating-star' value='2' checked='' type='radio'>"+
+              "<label for='rating-star-2'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-1' name='rating-star' value='1'  type='radio'>"+
+              "<label for='rating-star-1'><i class='ion-star'></i>"+
+              "</label>"+
+            "</div>";
+						return htmlstar;
+        break;
+		case 3:
+var htmlstar="<div class='rating'>"+
+              "<input id='rating-star-5' name='rating-star' value='5' type='radio'>"+
+              "<label for='rating-star-5'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-4' name='rating-star' value='4'  type='radio'>"+
+              "<label for='rating-star-4'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-3' name='rating-star' value='3' checked=''  type='radio'>"+
+              "<label for='rating-star-3'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-2' name='rating-star' value='2' type='radio'>"+
+              "<label for='rating-star-2'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-1' name='rating-star' value='1'  type='radio'>"+
+              "<label for='rating-star-1'><i class='ion-star'></i>"+
+              "</label>"+
+            "</div>";
+						return htmlstar;
+        break;
+		case 4:
+        var htmlstar="<div class='rating'>"+
+              "<input id='rating-star-5' name='rating-star' value='5' type='radio'>"+
+              "<label for='rating-star-5'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-4' name='rating-star' value='4' checked='' type='radio'>"+
+              "<label for='rating-star-4'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-3' name='rating-star' value='3'   type='radio'>"+
+              "<label for='rating-star-3'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-2' name='rating-star' value='2' type='radio'>"+
+              "<label for='rating-star-2'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-1' name='rating-star' value='1'  type='radio'>"+
+              "<label for='rating-star-1'><i class='ion-star'></i>"+
+              "</label>"+
+            "</div>";
+						return htmlstar;
+        break;
+		case 5:
+       var htmlstar="<div class='rating'>"+
+              "<input id='rating-star-5' name='rating-star' value='5' checked='' type='radio'>"+
+              "<label for='rating-star-5'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-4' name='rating-star' value='4'  type='radio'>"+
+              "<label for='rating-star-4'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-3' name='rating-star' value='3'   type='radio'>"+
+              "<label for='rating-star-3'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-2' name='rating-star' value='2' type='radio'>"+
+              "<label for='rating-star-2'><i class='ion-star'></i>"+
+              "</label>"+
+              "<input id='rating-star-1' name='rating-star' value='1'  type='radio'>"+
+              "<label for='rating-star-1'><i class='ion-star'></i>"+
+              "</label>"+
+            "</div>";
+			return htmlstar;
+        break;
+    default:
+        return "";
+} 
+		
+		}
+	var rickshawLine1 = [ { x: 0, y: 3.5 }, { x: 1, y: 3 }, { x: 2, y: 5.0 }, { x: 3, y: 4.7 }, { x: 4, y: 2 },{ x: 5, y: 3.5 }, { x: 6, y: 3 }, { x: 7, y: 5.0 }, { x: 8, y: 4.7 }, { x: 9, y: 2 },{ x: 10, y: 3.5 }, { x: 11, y: 3 }, { x: 12, y: 5 }, { x: 13, y: 4.7 }, { x: 14, y: 5.0 } ];
+    
+	(function() {
+      var element = $("#rickshawLine");
+      var graph = new Rickshaw.Graph( {
+        element: element[0],
+        renderer: 'line',
+        stroke: true,
+        series: [ {
+          data: rickshawLine1,
+          color: '#673ab7',
+          name: 'Business Rating'
+        },{
+			data:[{ x: 0, y: 5.1 }],
+			color:'#ffffff',
+			
+			}]
+      } );
+      graph.render();
+    
+      var hoverDetail = new Rickshaw.Graph.HoverDetail({
+        graph: graph,
+        xFormatter: function(x) { return "" },
+        yFormatter: function(y) { var stars=makestars(y)
+		return stars; }
+      });
+    
+      // responsive
+      $(window).on('resize', function() {
+        graph.configure({
+          width: element.width()
+        });
+        graph.render();
+      });
+    }());
+    
+    
     (function() {
       var chart = $("#flotPieChart");
       var data = [

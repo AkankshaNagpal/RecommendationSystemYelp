@@ -31,6 +31,15 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping("/businessDashboard")
+	public ModelAndView businessDashboard()
+	{
+		ModelAndView model = new ModelAndView("PridictionResuil");
+		
+		return model;
+		
+	}
+	
 	@RequestMapping("/welcome/{userName}")
 	public ModelAndView helloWorld(@PathVariable("userName") String name)
 	{
