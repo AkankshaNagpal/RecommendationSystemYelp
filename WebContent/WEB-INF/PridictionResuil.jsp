@@ -164,10 +164,10 @@
     <!-- form -->
     <div class="col s12 l5">
     <div class="card-panel"> 
-    <form >
+    <form id="businessFormID">
     <!-- Business Name -->
             <div class="input-field">
-              <input id="input-name" type="text" required>
+              <input name="businessName" id="input-name" type="text" required>
               <label for="input-name">Business Name</label>
             </div>
             <!-- /Business Name -->
@@ -191,10 +191,10 @@
     <!-- Zip Code -->
             <select name="zipcode" required>
               <option value="" disabled selected>Zip Code</option>
-              <option value="restaurants">95112</option>
-              <option value="pubandbar">95113</option>
-              <option value="shoppingmall">95114</option>
-              <option value="healthcare">95116</option>
+              <option value="95112">95112</option>
+              <option value="95113">95113</option>
+              <option value="95114">95114</option>
+              <option value="95116">95116</option>
             </select>
             <!-- /Zip Code -->
     
@@ -218,14 +218,14 @@ Open Hours Sat-Sun:
 <!-- /open sat sun-->
 <!-- Comments -->
             <div class="input-field">
-              <textarea id="textarea-msg" class="materialize-textarea" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-validation-threshold="10" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+              <textarea id="textarea-msg" class="materialize-textarea"  data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-validation-threshold="10" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
               required></textarea>
               <label for="textarea-msg">Comment:</label>
             </div>
             <!-- /Comments -->
             
 
-    <button class="btn" type="submit" name="action">
+    <button class="btn" type="submit" name="submitbtn" onclick="businessSubmitForm();">
       Submit <i class="mdi-content-send right"></i>
     </button>
 
@@ -544,29 +544,50 @@ var htmlstar="<div class='rating'>"+
     }(jQuery));
     
     
+	 function businessSubmitForm(){
+		 var data=$("#businessFormID").serializeArray();
+			//alert(data);
+			var o = {};
+			  // o["email_id"].push(query[1]);
+			  // var a = this.serializeArray();
+			   $.each(data, function() {
+			       if (o[this.name] !== undefined) {
+			           if (!o[this.name].push) {
+			               o[this.name] = [o[this.name]];
+			           }
+			           o[this.name].push(this.value || '');
+			       } else {
+			           o[this.name] = this.value || '';
+			       }
+			   });
+			   alert(JSON.stringify(o));
+	 }
+	 
+	 
+	 
    function getServices(){
 	   var selectedopt=$("#businessType").val();
 	   switch(selectedopt) {
 	    case "restaurants":
-	var htmlstar='<input name="check-hobbies" type="checkbox" id="check-take" value="takeout" />'+
+	var htmlstar='<input name="services" type="checkbox" id="check-take" value="takeout" />'+
 	'<label for="check-take">Take out</label>'+
-	'<input name="check-hobbies" type="checkbox" id="check-wifi" value="wifi" />'+
+	'<input name="services" type="checkbox" id="check-wifi" value="wifi" />'+
 	'<label for="check-wifi">wifi</label>'+
-	'<input name="check-hobbies" type="checkbox" id="check-alcohol" value="alcohol" />'+
+	'<input name="services" type="checkbox" id="check-alcohol" value="alcohol" />'+
 	'<label for="check-alcohol">alcohol</label>'+
-	'<input name="check-hobbies" type="checkbox" id="check-parking" value="parking" />'+
+	'<input name="services" type="checkbox" id="check-parking" value="parking" />'+
 	'<label for="check-parking">parking</label>'+
-	'<input name="check-hobbies" type="checkbox" id="check-dinner" value="dinner" />'+
+	'<input name="services" type="checkbox" id="check-dinner" value="dinner" />'+
 	'<label for="check-dinner">dinner</label>';
 				$("#serviceSelect").empty();
 				$("#serviceSelect").append(htmlstar);
 	        break;
 	    case "pubandbar":
-	    	var htmlstar='<input name="check-hobbies" type="checkbox" id="check-alcohol1" value="alcohol" />'+
+	    	var htmlstar='<input name="services" type="checkbox" id="check-alcohol1" value="alcohol" />'+
 	    	'<label for="check-alcohol1">alcohol</label>'+
-	    	'<input name="check-hobbies" type="checkbox" id="check-dancing" value="dancing" />'+
+	    	'<input name="services" type="checkbox" id="check-dancing" value="dancing" />'+
 	    	'<label for="check-dancing">Dancing Floor</label>'+
-	    	'<input name="check-hobbies" type="checkbox" id="check-noiselevel" value="noiselevel" />'+
+	    	'<input name="services" type="checkbox" id="check-noiselevel" value="noiselevel" />'+
 	    	'<label for="check-noiselevel">noise level</label>';
 	    				$("#serviceSelect").empty();
 	    				$("#serviceSelect").append(htmlstar);
