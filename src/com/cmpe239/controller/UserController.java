@@ -1,8 +1,12 @@
 package com.cmpe239.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import business_recommender.Recommender;
+
 import com.cmpe239.dao.UserDaoImpl;
 import com.cmpe239.entities.UserEntity;
-import com.cmpe239.model.User;
-import com.cmpe239.model.UserLogin;
-import com.cmpe239.model.UserLoginSucess;
+import com.cmpe239.model.*;
 
 
 @Controller
@@ -222,5 +226,23 @@ public class UserController {
 	
 	
 
+	@RequestMapping(value="/businessRecommendationResult",method = RequestMethod.POST )
+	public @ResponseBody BusinessSuccess  posttest(@RequestBody final BusinessForm ul){
+		System.out.println("called Login "+ul.getBusinessName()+" "+ul.getBusinessType()+" "+ul.getZipcode() + " "+ul.getServices().get(0));
+		
+		//UserLogin uls=new UserLogin();
+		String businessname = ul.getBusinessName();
+		String businesstype=ul.getBusinessType();
+		String zipcode = ul.getZipcode();
+		List<String> services = ul.getServices();
+		int[] ip = {0, 1, 1, 1, 0, 1, 0, 1, 0, 1};
+		
+		Recommender rc = new Recommender();
+		rc.find_success("Restaurant", ip, "15120");
+		
+		
+		return null;
+		
+	}
 	
 }
