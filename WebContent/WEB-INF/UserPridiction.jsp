@@ -57,8 +57,8 @@
         <li><a href="#!" class="search-bar-toggle"><i class="mdi-action-search"></i></a>
         </li>
         <li class="user">
-          <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="topUserName">
-            <img src="assets/_con/images/user.jpg" alt="UserImg" class="circle">Deep Mehta<i class="mdi-navigation-expand-more right"></i>
+          <a class="dropdown-button" href="#!" data-activates="user-dropdown" >
+            <img src="assets/_con/images/user.jpg" alt="UserImg" class="circle"><span id="topUserName">Deep Mehta</span><i class="mdi-navigation-expand-more right"></i>
           </a>
 
           <ul id="user-dropdown" class="dropdown-content">
@@ -160,8 +160,8 @@
     <div class="card-panel"> 
     <div class="each-result">
                 <img src="assets/_con/images/user2.jpg" alt="Felecia Castro" class="circle photo">
-                <div class="title" id="userName"><h3>Random Girl</h3></div>
-                <div class="label" id=""><h4>Random Manager</h4></div>
+                <div class="title" ><h4 id="userName">Random Girl</h4></div>
+                <div class="label" ><h5>Yelping Since:</h5><h5 id="Yelping">Random Manager</h5></div>
                 
 
     <div class="card-panel stats-card blue blue-text text-lighten-5">
@@ -563,7 +563,12 @@ Open Hours Sat-Sun:
 		     async: false,
 		     crossDomain: true,
 		     success: function(data) {
-		         alert('success-'+JSON.stringify(data));
+		         //alert('success-'+JSON.stringify(data));
+		         
+		         $('#topUserName').text(data.userProfile.useremail);
+		         $('#userName').text(data.userProfile.useremail);
+		         $('#Yelping').text(data.userProfile.yelpingSince);
+		         $('#fanCount').text(data.userProfile.fans);
 		         
 		     },
 		     error: function(response, text, err) {
