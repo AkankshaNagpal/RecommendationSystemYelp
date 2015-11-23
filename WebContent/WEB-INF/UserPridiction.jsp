@@ -554,10 +554,11 @@ Open Hours Sat-Sun:
     <script type="text/javascript" src="assets/gmaps/gmaps.min.js"></script>
     <script>
     $( document ).ready(function() {
+    	var username=localStorage.userName;
     	$.ajax({
 		     type: "GET",
 		     contentType: 'application/json',
-		     url: "userProfile",
+		     url: "userProfile/"+username,
 		     dataType: 'json',
 		     data: "",
 		     async: false,

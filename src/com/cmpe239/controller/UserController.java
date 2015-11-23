@@ -55,7 +55,7 @@ public class UserController {
 		return model;
 		
 	}
-	@RequestMapping("/hii")
+	@RequestMapping("/UserDashboard")
 	public ModelAndView hiTest()
 	{
 		ModelAndView model = new ModelAndView("UserPridiction");
@@ -132,6 +132,33 @@ public class UserController {
 		return uls;
 	}
 	
+	
+	@RequestMapping(value="/siginUP",method = RequestMethod.POST )
+	public @ResponseBody UserLoginSucess  signUP(@RequestBody final UserLogin ul){
+		System.out.println("called Login "+ul.getUserName()+" "+ul.getUserType()+" pass-"+ul.getPassword());
+		UserLoginSucess uls=new UserLoginSucess();
+		UserDaoImpl userDao = new UserDaoImpl();
+		UserEntity newUser = new UserEntity();
+		newUser.setUseremail(ul.getUserName());
+		newUser.setPassword(ul.getPassword());
+		newUser.setUsertype(ul.getUserType());
+		newUser.setYelpingSince("2015");
+		newUser.setFans("0");
+		UserEntity userEn = userDao.insertNewUser(newUser);
+		
+		if(userEn != null)
+		{
+		uls.setMessage("success");
+		uls.setUserID(ul.getUserName());
+		uls.setUserType(ul.getUserType());
+		}
+		else
+		{
+		uls.setMessage("error");
+		}
+			return uls;
+	}
+	
 	@RequestMapping("/validateLogin")
 	public ModelAndView validateLogin()
 	{
@@ -152,18 +179,21 @@ public class UserController {
 	}
 	
 	//Code to return userprofile
-	@RequestMapping("/userProfile")
-	public String getUserProfileJSON(Model model)
+	@RequestMapping("/userProfile/{userName:.*}")
+	public ModelAndView getUserProfileJSON(@PathVariable("userName") String name)
 	{
-		UserDaoImpl userDao = new UserDaoImpl();
-		UserEntity userProfile = userDao.validateUser("jeremy123@gmail.com");
-		model.addAttribute("userProfile",userProfile);
+		System.out.println("nme "+name);
 		
-		return "jsonTemplate";
+		ModelAndView model = new ModelAndView("jsonTemplate");
+		UserDaoImpl userDao = new UserDaoImpl();
+		UserEntity userProfile = userDao.validateUser(name);
+		model.addObject("userProfile",userProfile);
+		
+		return model;
 	}
 	
 	
-	@RequestMapping("/SignupSuccess")
+	/*@RequestMapping("/SignupSuccess")
 	public String getUserJSON(Model model)
 	{
 		UserDaoImpl userDao = new UserDaoImpl();
@@ -179,7 +209,7 @@ public class UserController {
 		}
 		
 		return "jsonTemplate";
-	}
+	}*/
 	
 	
 

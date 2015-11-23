@@ -234,19 +234,12 @@ $('.form-control').on('focus blur', function (e) {
 					
 					<p>Create Business or User Profile</p>
 		            <h2>Sign Up</h2>
-		            <form id="girisyap" name="signup_form" id="signup_form" method="post" enctype="multipart/form-data" onsubmit="return false;">
-
-					<div class="yarim form-group">
-    				        <label class="control-label" for="inputNormal">First Name</label>
-    				        <input type="text" name="signup_username" id="signup_username" class="bp-suggestions form-control" cols="50" rows="10" ></input>
-					</div>
-					<div class="yarim sn form-group">
-    				        <label class="control-label" for="inputNormal">Last Name</label>
-    				        <input type="text" name="field_1" id="field_1" value="" class="bp-suggestions form-control" cols="50" rows="10"></input>
-					</div>
+		            <form id="girisyap" name="signup_form" class="signup_form" method="post" enctype="multipart/form-data" onsubmit="return false;">
+					
+					
 					<div class="form-group">
     				        <label class="control-label" for="inputNormal">Email</label>
-    				        <input type="text" name="signup_email" id="signup_email" class="bp-suggestions form-control" cols="50" rows="10"></input>
+    				        <input type="text" name="userName" id="signup_email" class="bp-suggestions form-control" cols="50" rows="10"></input>
 					</div>
 					<div class="form-group">
     				        <label class="control-label" for="inputNormal">Password</label>
@@ -260,7 +253,7 @@ $('.form-control').on('focus blur', function (e) {
    					        <option value="user">user</option>
    					        </select>
 					</div>
-					<input type="submit" name="signup_submit" id="signup_submit" value="Sign Up" class="girisbtn"  />
+					<input type="submit" name="signup_submit" onclick="signUP();"id="signup_submit" value="Sign Up" class="girisbtn"  />
 					</form>
 
 				    <button id="moveright">Login</button>
@@ -302,6 +295,46 @@ $('.form-control').on('focus blur', function (e) {
 		</div>
 
 		<script>
+		function signUP(){
+			var data=$(".signup_form").serializeArray();
+			var o={};
+			$.each(data, function() {
+			       if (o[this.name] !== undefined) {
+			           if (!o[this.name].push) {
+			               o[this.name] = [o[this.name]];
+			           }
+			           o[this.name].push(this.value || '');
+			       } else {
+			           o[this.name] = this.value || '';
+			       }
+			   });
+			   alert(JSON.stringify(o));
+			   $.ajax({
+				     type: "POST",
+				     contentType: 'application/json',
+				     url: "siginUP",
+				     dataType: 'json',
+				     data: JSON.stringify(o),
+				     async: false,
+				     crossDomain: true,
+				     success: function(data) {
+				         alert('success-'+JSON.stringify(data));
+				         if(data.message=="success"){
+				        	 //alert("success");
+				        	 //if(data.)
+				        	localStorage.userName=data.userID;
+				        	 window.location.href="UserDashboard";
+				         }else{
+				        	 alert(data.message);
+				         }
+				     },
+				     error: function(response, text, err) {
+				         alert("r "+JSON.stringify(response)+" text -"+text+" error"+err);
+				     }
+				 });
+			   
+			
+		}
 		function login(){
 			var data=$(".sidebar-user-login").serializeArray();
 			//alert(data);
@@ -332,7 +365,8 @@ $('.form-control').on('focus blur', function (e) {
 				         if(data.message=="success"){
 				        	 //alert("success");
 				        	 //if(data.)
-				        	 window.location.href="hii";
+				        	localStorage.userName=data.userID;
+				        	 window.location.href="UserDashboard";
 				         }else{
 				        	 alert(data.message);
 				         }

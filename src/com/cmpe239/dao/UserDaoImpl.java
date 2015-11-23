@@ -114,12 +114,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public UserEntity insertNewUser() {
+	public UserEntity insertNewUser(UserEntity user) {
 		// TODO Auto-generated method stub
-		UserEntity ue = new UserEntity();
-		ue.setUseremail("akanksha.nagpal@sjsu.edu");
-		ue.setPassword("123456");
-		ue.setUsertype("user");
 		
 		
 		
@@ -128,14 +124,14 @@ public class UserDaoImpl implements UserDao {
 		UserDaoImpl userDao = new UserDaoImpl();
 		
 		int userid = userDao.getLastUserID() + 1;
-		ue.setUserID(userid);
+		user.setUserID(userid);
 		
 		session.beginTransaction();
-		session.save(ue);
+		session.save(user);
 		session.getTransaction().commit();
 		session.close();
 		
-		return ue;
+		return user;
 		
 	}
 
