@@ -57,16 +57,11 @@
         <li><a href="#!" class="search-bar-toggle"><i class="mdi-action-search"></i></a>
         </li>
         <li class="user">
-          <a class="dropdown-button" href="#!" data-activates="user-dropdown">
-            <img src="assets/_con/images/user.jpg" alt="John Doe" class="circle">Deep Mehta<i class="mdi-navigation-expand-more right"></i>
+          <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="topUserName">
+            <img src="assets/_con/images/user.jpg" alt="UserImg" class="circle">Deep Mehta<i class="mdi-navigation-expand-more right"></i>
           </a>
 
           <ul id="user-dropdown" class="dropdown-content">
-            <li><a href="page-profile.html"><i class="fa fa-user"></i> Profile</a>
-            </li>
-            <li><a href="mail-inbox.html"><i class="fa fa-envelope"></i> Messages <span class="badge new">2</span></a>
-            </li>
-            
             <li class="divider"></li>
             <li><a href="page-sign-in.html"><i class="fa fa-sign-out"></i> Logout</a>
             </li>
@@ -153,7 +148,7 @@
 
     </div>
     <!-- /Breadcrumb -->
-Here we go
+
 
 
     <br/>
@@ -165,8 +160,18 @@ Here we go
     <div class="card-panel"> 
     <div class="each-result">
                 <img src="assets/_con/images/user2.jpg" alt="Felecia Castro" class="circle photo">
-                <div class="title">Random Girl</div>
-                <div class="label">Random Manager</div>
+                <div class="title" id="userName"><h3>Random Girl</h3></div>
+                <div class="label" id=""><h4>Random Manager</h4></div>
+                
+
+    <div class="card-panel stats-card blue blue-text text-lighten-5">
+      <i class="ion-fireball red-text"></i>
+      <span class="count" id="fanCount">145</span>
+      <div class="name">Fans</div>
+    </div>
+
+                
+                
               </div>
     </div>
     <div class="card-panel"> 
@@ -548,109 +553,25 @@ Open Hours Sat-Sun:
       <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script type="text/javascript" src="assets/gmaps/gmaps.min.js"></script>
     <script>
-    (function() {
-      var chart = $("#flotPieChart");
-      var data = [
-          { label: "IE",  data: 19.5, color: "#90a4ae"},
-          { label: "Safari",  data: 4.5, color: "#7986cb"},
-          { label: "Firefox",  data: 36.6, color: "#9575cd"},
-          { label: "Opera",  data: 2.3, color: "#4db6ac"},
-          { label: "Chrome",  data: 36.3, color: "#64b5f6"}
-      ];
-      var options = {
-        series: {
-          pie: {
-            innerRadius: 0.5,
-            show: true
-          }
-        },
-        grid: {
-          hoverable: true
-        },
-        legend: {
-          backgroundOpacity: 0,
-          labelBoxBorderColor: "none"
-        },
-        tooltip: true,
-        tooltipOpts: {
-          content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-          shifts: {
-            x: 20,
-            y: 0
-          },
-          defaultTheme: false
-        }
-      };
-    
-      function initFlot() {
-        $.plot(chart, data, options);
-        chart.find('.legend table').css('width', 'auto')
-             .find('td').css('padding', 5);
-      }
-      initFlot();
-      $(window).on('resize', initFlot);
-    
-    }());
-	
-	 /*
-     * MAP 2
-     */
-    (function($) {
-      "use strict";
-    
-      // init map
-      var map = new GMaps({
-          div: '#map2',
-          lat: 34.9365255,
-          lng: -85.4373943,
-          zoom: 4
-      });
-    
-      // add New York marker
-      map.addMarker({
-        lat: 40.706086,
-        lng: -73.996864,
-        title: 'New York',
-        infoWindow: {
-          content: '<b>New York</b> is a state in the Northeastern and Mid-Atlantic regions of the <i>United States</i>.'
-        }
-      });
-    
-      // add Chicago marker
-      map.addMarker({
-        lat: 41.8337329,
-        lng: -87.7321554,
-        title: 'Chicago',
-        infoWindow: {
-          content: '<b>Chicago</b> is the third most populous city in the <i>United States</i>, after <i>New York City</i> and <i>Los Angeles</i>.'
-        }
-      });
-    
-      // add Miami marker
-      map.addMarker({
-        lat: 25.782324,
-        lng: -80.2310801,
-        title: 'Miami',
-        infoWindow: {
-          content: '<b>Miami</b> is a city located on the Atlantic coast in southeastern <i>Florida</i> and the county seat of Miami-Dade County.'
-        }
-      });
-    
-      // add Dallas marker
-      map.addMarker({
-        lat: 32.8206645,
-        lng: -96.7313396,
-        title: 'Dallas',
-        infoWindow: {
-          content: '<b>Dallas</b> is a major city in Texas and is the largest urban center of the fourth most populous metropolitan area in the <i>United States</i>.'
-        }
-      });
-    
-    }(jQuery));
-    
-    
+    $( document ).ready(function() {
+    	$.ajax({
+		     type: "GET",
+		     contentType: 'application/json',
+		     url: "userProfile",
+		     dataType: 'json',
+		     data: "",
+		     async: false,
+		     crossDomain: true,
+		     success: function(data) {
+		         alert('success-'+JSON.stringify(data));
+		         
+		     },
+		     error: function(response, text, err) {
+		         alert("r "+JSON.stringify(response)+" text -"+text+" error"+err);
+		     }
+		 });
+    }); 
    
-    
     </script>
 </body>
 </html>
