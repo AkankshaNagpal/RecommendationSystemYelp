@@ -322,7 +322,7 @@ $('.form-control').on('focus blur', function (e) {
 			   $.ajax({
 				     type: "POST",
 				     contentType: 'application/json',
-				     url: "deep/post",
+				     url: "login",
 				     dataType: 'json',
 				     data: JSON.stringify(o),
 				     async: false,

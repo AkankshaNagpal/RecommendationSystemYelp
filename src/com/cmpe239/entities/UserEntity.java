@@ -10,21 +10,57 @@ public class UserEntity {
 	
 	@Id
 	private int userID;
-	private String username;
+	private String yelpID;
 	private String useremail;
+	private String usertype;
+	private String password;
+	private String fans;
+	private String yelpingSince;
 	
+	public String getFans() {
+		return fans;
+	}
+
+	public void setFans(String fans) {
+		this.fans = fans;
+	}
+
+	public String getYelpingSince() {
+		return yelpingSince;
+	}
+
+	public void setYelpingSince(String yelpingSince) {
+		this.yelpingSince = yelpingSince;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getYelpID() {
+		return yelpID;
+	}
+	public void setYelpID(String yelpID) {
+		this.yelpID = yelpID;
+	}
+	
+	public String getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 	public int getUserID() {
 		return userID;
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 	public String getUseremail() {
 		return useremail;
 	}

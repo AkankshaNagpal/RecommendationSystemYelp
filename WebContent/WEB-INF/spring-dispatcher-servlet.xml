@@ -25,16 +25,22 @@
     
     <mvc:annotation-driven />
 	
-    <bean id="jspViewResolver"
+   <bean id="jspViewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"
             value="org.springframework.web.servlet.view.JstlView"></property>
         <property name="prefix" value="/WEB-INF/"></property>
         <property name="suffix" value=".jsp"></property>
+        <property name= "order" value = "1"></property>
     </bean>
+   
+ <bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"> 
+<property name="order" value="0"> </property> </bean>
+<bean name="jsonTemplate" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
  <mvc:resources mapping="/assets/**" location="/assets/"/>
  
-    <mvc:default-servlet-handler/>
+    <mvc:default-servlet-handler/> 
+
 
 
 </beans>
