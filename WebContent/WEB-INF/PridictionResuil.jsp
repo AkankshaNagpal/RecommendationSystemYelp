@@ -445,13 +445,14 @@ var htmlstar="<div class='rating'>"+
     
     (function() {
       var chart = $("#flotPieChart");
-      var data = [
+      /*var data = [
           { label: "5",  data: 19.5, color: "#90a4ae"},
           { label: "4",  data: 4.5, color: "#7986cb"},
           { label: "3",  data: 36.6, color: "#9575cd"},
           { label: "2",  data: 2.3, color: "#4db6ac"},
           { label: "1",  data: 36.3, color: "#64b5f6"}
-      ];
+      ];*/
+      var data=[{"data":0,"color":"#90a4ae","label":1.0},{"data":0,"color":"#7986cb","label":2.0},{"data":0,"color":"#9575cd","label":4.0},{"data":0,"color":"#4db6ac","label":4.5},{"data":0,"color":"#64b5f6","label":2.5},{"data":0,"color":"#CC3399","label":5.0},{"data":0,"color":"#990099","label":1.5},{"data":0,"color":"#FF0066","label":3.0},{"data":0,"color":"#FFFF99","label":3.5}];
       var options = {
         series: {
           pie: {
