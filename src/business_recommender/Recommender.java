@@ -74,14 +74,17 @@ public class Recommender {
 	public  Map<Integer, Double> line_graph_map = new HashMap<Integer, Double>();
 	
 	public  Set<String> prediction;
+	public double predicted_rating;
+	public double predicted_success_rate;
+	public Map<String, List<Double>> op = new HashMap<String, List<Double>>();
 	
-	public  Map<String, Double[]> restaurant_recommend(int[] ip, String ip_file, String location) {
+	public  Map<String, List<Double>> restaurant_recommend(int[] ip, String ip_file, String location) {
 		
-		Map<String, Double[]> op = new HashMap<String, Double[]>();
 		prediction = new HashSet<String>();
 		
 		try {
 			
+			System.out.println("Input:" + ip);
 			String line = null;
 			String[] splitted_ip = new String[15];
 			
@@ -105,35 +108,36 @@ public class Recommender {
 					int cnt = 0;
 					for(int i = 0; i < 10; i++) {
 						
-						if(ip[i] == 1) {
-							if(ip[i] == Integer.parseInt(splitted_ip[i+3]))
+						if(ip[i] > 0) {
+							if(splitted_ip[i+3].equals("1"))
 								cnt++;
 						}
-						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[14]) > 3)
+						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[14]) > 4)
 							prediction.add(restaurant_attributes.get(i+1));
 					}
-					//System.out.println("BID : " + b_id);
-					/*temp.put("x", new Integer(b_id));
-					temp.put("y", new Double(splitted_ip[14]));
-					line_graph.add(temp);*/
 					
 					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[14]));
 					b_id++;
 					pie_graph.put(Double.parseDouble(splitted_ip[14]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
-					Double[] temp_arr = {(double) cnt, Double.parseDouble(splitted_ip[14])};
-					op.put(splitted_ip[0], temp_arr);
-				
+					
+					List<Double> temp_list = new ArrayList<Double>();
+					temp_list.add((double)cnt);
+					temp_list.add(Double.parseDouble(splitted_ip[14]));
+					
+					System.out.println("Temp List: " + temp_list);
+					op.put(splitted_ip[0].toString(), temp_list);
+					System.out.println(op);
 				}
 			}
 			
 			Double[] rating = new Double[op.size()];
 			int m = 0;
-			for(Entry<String, Double[]> e : op.entrySet()) {
+			for(Entry<String, List<Double>> e : op.entrySet()) {
 				
 				//System.out.println(e.getKey() + ": " + e.getValue()[0] + ", " + e.getValue()[1]);
-				if(e.getValue()[0] > 1) {
+				if(e.getValue().get(0) > 1) {
 					
-					rating[m++]  = e.getValue()[1];
+					rating[m++]  = e.getValue().get(1);
 				}
 			}
 			
@@ -143,7 +147,10 @@ public class Recommender {
 				sum += rating[i];
 			}
 			br.close();
-			System.out.println("Predicted Rating : " + (sum/m) + "\nSuccess Rate :" + ((sum/m)*20) + "%");
+			
+			predicted_rating = sum/(double)m;
+			predicted_success_rate = predicted_rating * 20;
+			System.out.println("Predicted Rating : " + predicted_rating + "\nSuccess Rate :" + predicted_success_rate + "%");
 			
 		}
 		catch(FileNotFoundException ex) {
@@ -156,13 +163,14 @@ public class Recommender {
 		return op;
 	}
 	
-	public  Map<String, Double[]> health_recommend(int[] ip, String ip_file, String location) {
+	public  Map<String, List<Double>> health_recommend(int[] ip, String ip_file, String location) {
 		
-		Map<String, Double[]> op = new HashMap<String, Double[]>();
+		
 		prediction = new HashSet<String>();
 		
 		try {
 			
+			System.out.println("Input:" + ip);
 			String line = null;
 			String[] splitted_ip = new String[6];
 			
@@ -174,6 +182,9 @@ public class Recommender {
 				return null;
 			}
 			
+			JSONObject temp = new JSONObject();	
+			Integer b_id = 1;
+			
 			while((line = br.readLine()) != null) {
 				
 				splitted_ip = line.split(",");
@@ -183,28 +194,36 @@ public class Recommender {
 					int cnt = 0;
 					for(int i = 0; i < 2; i++) {
 						
-						if(ip[i] == 1) {
-							if(ip[i] == Integer.parseInt(splitted_ip[i+3]))
+						if(ip[i] > 0) {
+							if(splitted_ip[i+3].equals("1"))
 								cnt++;
 						}
-						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[5]) > 3)
-							prediction.add(health_attributes.get(i+1));
+						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[5]) > 4)
+							prediction.add(restaurant_attributes.get(i+1));
 					}
 					
-					Double[] temp = {(double) cnt, Double.parseDouble(splitted_ip[5])};
-					op.put(splitted_ip[0], temp);
-				
+					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[5]));
+					b_id++;
+					pie_graph.put(Double.parseDouble(splitted_ip[5]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					
+					List<Double> temp_list = new ArrayList<Double>();
+					temp_list.add((double)cnt);
+					temp_list.add(Double.parseDouble(splitted_ip[5]));
+					
+					System.out.println("Temp List: " + temp_list);
+					op.put(splitted_ip[0].toString(), temp_list);
+					System.out.println(op);
 				}
 			}
 			
 			Double[] rating = new Double[op.size()];
 			int m = 0;
-			for(Entry<String, Double[]> e : op.entrySet()) {
+			for(Entry<String, List<Double>> e : op.entrySet()) {
 				
 				//System.out.println(e.getKey() + ": " + e.getValue()[0] + ", " + e.getValue()[1]);
-				if(e.getValue()[0] > 1) {
+				if(e.getValue().get(0) > 1) {
 					
-					rating[m++]  = e.getValue()[1];
+					rating[m++]  = e.getValue().get(1);
 				}
 			}
 			
@@ -214,8 +233,10 @@ public class Recommender {
 				sum += rating[i];
 			}
 			br.close();
-			System.out.println("Sum : " + sum);
-			System.out.println("Predicted Rating : " + (sum/m) + "\nSuccess Rate :" + ((sum/m)*20) + "%");
+			
+			predicted_rating = sum/(double)m;
+			predicted_success_rate = predicted_rating * 20;
+			System.out.println("Predicted Rating : " + predicted_rating + "\nSuccess Rate :" + predicted_success_rate + "%");
 			
 		}
 		catch(FileNotFoundException ex) {
@@ -228,13 +249,13 @@ public class Recommender {
 		return op;
 	}
 	
-	public  Map<String, Double[]> pubsnbars_recommend(int[] ip, String ip_file, String location) {
+	public  Map<String, List<Double>> pubsnbars_recommend(int[] ip, String ip_file, String location) {
 		
-		Map<String, Double[]> op = new HashMap<String, Double[]>();
 		prediction = new HashSet<String>();
 		
 		try {
 			
+			System.out.println("Input:" + ip);
 			String line = null;
 			String[] splitted_ip = new String[7];
 			
@@ -246,6 +267,9 @@ public class Recommender {
 				return null;
 			}
 			
+			JSONObject temp = new JSONObject();	
+			Integer b_id = 1;
+			
 			while((line = br.readLine()) != null) {
 				
 				splitted_ip = line.split(",");
@@ -255,51 +279,59 @@ public class Recommender {
 					int cnt = 0;
 					for(int i = 0; i < 2; i++) {
 						
-						if(ip[i] >= 1) {
-							if(ip[i] == Integer.parseInt(splitted_ip[i+3]))
+						if(ip[i] > 0) {
+							if(splitted_ip[i+3].equals("1"))
 								cnt++;
 						}
-						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[6]) > 3)
-							prediction.add(pubsnbars_attributes.get(i+1));
+						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[6]) > 4)
+							prediction.add(restaurant_attributes.get(i+1));
 					}
 					
 					switch(splitted_ip[5]) {
-						
-						case "null": if(ip[2] == 0)
-							cnt++;
-							break;
-							
-						case "quiet": if(ip[2] == 1)
-							cnt++;
-							break;
-							
-						case "average": if(ip[2] == 0)
-							cnt++;
-							break;
-							
-						case "loud": if(ip[2] == 0)
-							cnt++;
-							break;
-							
-						case "vey_loud": if(ip[2] == 0)
-							cnt++;
-							break;
-					}
 					
-					Double[] temp = {(double) cnt, Double.parseDouble(splitted_ip[6])};
-					op.put(splitted_ip[0], temp);
-				
+					case "null": if(ip[2] == 0)
+						cnt++;
+						break;
+						
+					case "quiet": if(ip[2] == 1)
+						cnt++;
+						break;
+						
+					case "average": if(ip[2] == 0)
+						cnt++;
+						break;
+						
+					case "loud": if(ip[2] == 0)
+						cnt++;
+						break;
+						
+					case "vey_loud": if(ip[2] == 0)
+						cnt++;
+						break;
+				}
+					
+					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[6]));
+					b_id++;
+					pie_graph.put(Double.parseDouble(splitted_ip[6]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					
+					List<Double> temp_list = new ArrayList<Double>();
+					temp_list.add((double)cnt);
+					temp_list.add(Double.parseDouble(splitted_ip[6]));
+					
+					System.out.println("Temp List: " + temp_list);
+					op.put(splitted_ip[0].toString(), temp_list);
+					System.out.println(op);
 				}
 			}
 			
 			Double[] rating = new Double[op.size()];
 			int m = 0;
-			for(Entry<String, Double[]> e : op.entrySet()) {
+			for(Entry<String, List<Double>> e : op.entrySet()) {
 				
 				//System.out.println(e.getKey() + ": " + e.getValue()[0] + ", " + e.getValue()[1]);
-				if(e.getValue()[0] > 0) {
+				if(e.getValue().get(0) > 1) {
 					
-					rating[m++]  = e.getValue()[1];
+					rating[m++]  = e.getValue().get(1);
 				}
 			}
 			
@@ -309,10 +341,13 @@ public class Recommender {
 				sum += rating[i];
 			}
 			br.close();
-			System.out.println("Sum : " + sum);
-			System.out.println("Predicted Rating : " + (sum/m) + "\nSuccess Rate :" + ((sum/m)*20) + "%");
+			
+			predicted_rating = sum/(double)m;
+			predicted_success_rate = predicted_rating * 20;
+			System.out.println("Predicted Rating : " + predicted_rating + "\nSuccess Rate :" + predicted_success_rate + "%");
 			
 		}
+		
 		catch(FileNotFoundException ex) {
 			System.out.println("File did not find!");
 		}
@@ -323,13 +358,13 @@ public class Recommender {
 		return op;
 	}
 	
-	public  Map<String, Double[]> shopping_recommend(int[] ip, String ip_file, String location) {
+	public  Map<String, List<Double>> shopping_recommend(int[] ip, String ip_file, String location) {
 		
-		Map<String, Double[]> op = new HashMap<String, Double[]>();
-		prediction = new HashSet<String>();
+prediction = new HashSet<String>();
 		
 		try {
 			
+			System.out.println("Input:" + ip);
 			String line = null;
 			String[] splitted_ip = new String[8];
 			
@@ -341,6 +376,9 @@ public class Recommender {
 				return null;
 			}
 			
+			JSONObject temp = new JSONObject();	
+			Integer b_id = 1;
+			
 			while((line = br.readLine()) != null) {
 				
 				splitted_ip = line.split(",");
@@ -350,28 +388,36 @@ public class Recommender {
 					int cnt = 0;
 					for(int i = 0; i < 4; i++) {
 						
-						if(ip[i] >= 1) {
-							if(ip[i] == Integer.parseInt(splitted_ip[i+3]))
+						if(ip[i] > 0) {
+							if(splitted_ip[i+3].equals("1"))
 								cnt++;
 						}
-						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[7]) > 3)
-							prediction.add(shopping_attributes.get(i+1));
+						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[7]) > 4)
+							prediction.add(restaurant_attributes.get(i+1));
 					}
 					
-					Double[] temp = {(double) cnt, Double.parseDouble(splitted_ip[7])};
-					op.put(splitted_ip[0], temp);
-				
+					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[7]));
+					b_id++;
+					pie_graph.put(Double.parseDouble(splitted_ip[7]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					
+					List<Double> temp_list = new ArrayList<Double>();
+					temp_list.add((double)cnt);
+					temp_list.add(Double.parseDouble(splitted_ip[7]));
+					
+					System.out.println("Temp List: " + temp_list);
+					op.put(splitted_ip[0].toString(), temp_list);
+					System.out.println(op);
 				}
 			}
 			
 			Double[] rating = new Double[op.size()];
 			int m = 0;
-			for(Entry<String, Double[]> e : op.entrySet()) {
+			for(Entry<String, List<Double>> e : op.entrySet()) {
 				
 				//System.out.println(e.getKey() + ": " + e.getValue()[0] + ", " + e.getValue()[1]);
-				if(e.getValue()[0] > 0) {
+				if(e.getValue().get(0) > 1) {
 					
-					rating[m++]  = e.getValue()[1];
+					rating[m++]  = e.getValue().get(1);
 				}
 			}
 			
@@ -381,10 +427,11 @@ public class Recommender {
 				sum += rating[i];
 			}
 			br.close();
-			System.out.println("Sum : " + sum);
-			System.out.println("Predicted Rating : " + (sum/m) + "\nSuccess Rate :" + ((sum/m)*20) + "%");
 			
-			prediction.add(shopping_attributes.get(4));
+			predicted_rating = sum/(double)m;
+			predicted_success_rate = predicted_rating * 20;
+			System.out.println("Predicted Rating : " + predicted_rating + "\nSuccess Rate :" + predicted_success_rate + "%");
+			
 		}
 		catch(FileNotFoundException ex) {
 			System.out.println("File did not find!");
@@ -405,6 +452,8 @@ public class Recommender {
 		}
 		System.out.println("\n");
 		
+		data.put("PredictedRating", predicted_rating);
+		data.put("PredictedSuccessRate", predicted_success_rate);
 		data.put("Prediction", prediction);
 		
 		JSONArray pie_chart = new JSONArray();
@@ -436,32 +485,67 @@ public class Recommender {
 	}
 	
 	
-	public  void find_success(String category, int[] ip, String location) {
+	public  JSONObject find_success(String category, List<String> ip, String location) {
 		
-		Map<String, Double[]> op;
+		Map<String, List<Double>> op;
 		
 		System.out.println("\nCategory : " + category);
 		switch(category) {
 		
 			case "Restaurant":
-				op = restaurant_recommend(ip, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\restaurant.csv", location);
+				int[] input = new int[10];
+				for(Entry e:restaurant_attributes.entrySet()) {
+					
+					if(ip.contains(e.getValue())) {
+						
+						input[(int) e.getKey()-1] = 1;
+					}
+				}
+				
+				op = restaurant_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\restaurant.csv", location);
 				predict();
 				break;
 				
 			case "Health":
-				op = health_recommend(ip, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\health.csv", location);
+				input = new int[2];
+				for(Entry e:restaurant_attributes.entrySet()) {
+					
+					if(ip.contains(e.getValue())) {
+						
+						input[(int) e.getKey()] = 1;
+					}
+				}
+				op = health_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\health.csv", location);
 				predict();
 				break;
 				
 			case "Pubs and Bars":
-				op = pubsnbars_recommend(ip, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\pubsbars.csv", location);
+				input = new int[3];
+				for(Entry e:restaurant_attributes.entrySet()) {
+					
+					if(ip.contains(e.getValue())) {
+						
+						input[(int) e.getKey()] = 1;
+					}
+				}
+				op = pubsnbars_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\pubsbars.csv", location);
 				predict();
 				break;
 				
 			case "Shopping":
-				op = shopping_recommend(ip, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\shopping.csv", location);
+				input = new int[4];
+				for(Entry e:restaurant_attributes.entrySet()) {
+					
+					if(ip.contains(e.getValue())) {
+						
+						input[(int) e.getKey()] = 1;
+					}
+				}
+				op = shopping_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\shopping.csv", location);
 				predict();
 				break;
 		}
+		
+		return data;
 	}
 }
