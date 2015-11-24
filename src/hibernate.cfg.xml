@@ -28,6 +28,8 @@
  
         <!-- Mention here all the model classes along with their package name -->
  		<mapping class="com.cmpe239.entities.UserEntity"/>
+ 		<mapping class="com.cmpe239.entities.BusinessEntity"/>
+ 		
  		
  		 
     </session-factory>

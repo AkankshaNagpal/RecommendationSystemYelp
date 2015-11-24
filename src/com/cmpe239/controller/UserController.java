@@ -1,8 +1,14 @@
 package com.cmpe239.controller;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cmpe239.dao.BusinessdaoImpl;
 import com.cmpe239.dao.UserDaoImpl;
 import com.cmpe239.entities.UserEntity;
+import com.cmpe239.model.Business;
 import com.cmpe239.model.User;
 import com.cmpe239.model.UserLogin;
 import com.cmpe239.model.UserLoginSucess;
@@ -180,36 +188,74 @@ public class UserController {
 	
 	//Code to return userprofile
 	@RequestMapping("/userProfile/{userName:.*}")
-	public ModelAndView getUserProfileJSON(@PathVariable("userName") String name)
+	public ModelAndView getUserProfileJSON(@PathVariable("userName") String name) throws Exception
 	{
 		System.out.println("nme "+name);
 		
 		ModelAndView model = new ModelAndView("jsonTemplate");
 		UserDaoImpl userDao = new UserDaoImpl();
 		UserEntity userProfile = userDao.validateUser(name);
-		model.addObject("userProfile",userProfile);
+		JSONObject obj = new JSONObject();
+		JSONArray bussList = getUserRecommendations(userProfile.getUserID());
+		obj.put("userID", userProfile.getUserID());
+		obj.put("email", userProfile.getUseremail());
+		obj.put("recommdationList", bussList);
+		obj.put("yelpID", userProfile.getYelpID());
+		obj.put("email", userProfile.getUseremail());
+		obj.put("fans", userProfile.getFans());
+		obj.put("yelping_since", userProfile.getYelpingSince());
+		obj.put("type", userProfile.getUsertype());
+		obj.put("password", userProfile.getPassword());
+		model.addObject("user",obj);
 		
 		return model;
 	}
 	
 	
-	/*@RequestMapping("/SignupSuccess")
-	public String getUserJSON(Model model)
+	public JSONArray getUserRecommendations(int userID) throws Exception
 	{
+		//ModelAndView model = new ModelAndView("jsonTemplate");
 		UserDaoImpl userDao = new UserDaoImpl();
-		UserEntity userEn = userDao.insertNewUser();
+		BusinessdaoImpl bussDao = new BusinessdaoImpl();
+		List<RecommendedItem> recomm = userDao.recommendedBusiness(userID);
 		
-		if(userEn != null)
-		{
-		model.addAttribute("newuserProfile",userEn);
-		}
-		else
-		{
-		model.addAttribute("errorMessage", "Please enter valid username and password");
-		}
+		JSONArray list = new JSONArray();
 		
-		return "jsonTemplate";
+		for(int i =0; i<recomm.size();i++)
+		{
+		JSONObject obj = new JSONObject();
+		obj.put("businessID", recomm.get(i).getItemID());
+		String yelpBusinessID = bussDao.getYelpID((int) recomm.get(i).getItemID());
+		String name = bussDao.getBusinessName(yelpBusinessID);
+		String location = bussDao.getBusinessLocation(yelpBusinessID);
+		String stars = bussDao.getBusinessStars(yelpBusinessID);
+		obj.put("name",name);
+		obj.put("address",location);
+		obj.put("yelpBussinessID",yelpBusinessID);
+		obj.put("rating", recomm.get(i).getValue());
+		obj.put("stars",stars);
+		list.add(obj);
+		}
+		  System.out.print(list);
+	
+		//model.addObject("bussList",list);
+		return list;
+	}
+	
+	/*
+	@RequestMapping("/BussinessRecommendations")
+	public ModelAndView getBusinessRecommendations() throws Exception
+	{
+		ModelAndView model = new ModelAndView("BussRecommendations");
+		UserDaoImpl userDao = new UserDaoImpl();
+		List<String> recomm = userDao.getBusinessList("phoneix", "food");
+		model.addObject("Business1",recomm.get(0));
+		return model;
 	}*/
+	
+	
+	
+	
 	
 	
 
