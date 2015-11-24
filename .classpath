@@ -22,5 +22,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="F:/NodeJS/Sample_Recommender/json-20140107.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
