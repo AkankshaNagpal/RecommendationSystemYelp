@@ -63,7 +63,7 @@ public class BusinessController {
 		try{
 
 			StringBuilder result = new StringBuilder();
-		    URL url = new URL("https://www.zipcodeapi.com/rest/LapKZOoH0rcwVyfgQqrp0qvSBrlBbueXFEHEt6mtxz0t8fJYFboGBTydlUPxp3u4/radius.json/"+zipcode+"/5/mile");
+		    URL url = new URL("https://www.zipcodeapi.com/rest/BurO3JJtkJq7fikHvdkk7T8EJvICXsNzWenZX7tiQUp6cKOIY9252bJMGroEUcdR/radius.json/"+zipcode+"/5/mile");
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    conn.setRequestMethod("GET");
 		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
