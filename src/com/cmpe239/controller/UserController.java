@@ -1,12 +1,19 @@
 package com.cmpe239.controller;
 
+import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +28,7 @@ import business_recommender.Recommender;
 import com.cmpe239.dao.UserDaoImpl;
 import com.cmpe239.entities.UserEntity;
 import com.cmpe239.model.*;
+import com.fasterxml.jackson.core.JsonParser;
 
 
 @Controller
@@ -227,21 +235,62 @@ public class UserController {
 	
 
 	@RequestMapping(value="/businessRecommendationResult",method = RequestMethod.POST )
-	public @ResponseBody BusinessSuccess  posttest(@RequestBody final BusinessForm ul){
+	public @ResponseBody JSONObject  posttest(@RequestBody final BusinessForm ul){
 		System.out.println("called Login "+ul.getBusinessName()+" "+ul.getBusinessType()+" "+ul.getZipcode() + " "+ul.getServices().get(0));
 		
-		//UserLogin uls=new UserLogin();
 		String businessname = ul.getBusinessName();
 		String businesstype=ul.getBusinessType();
 		String zipcode = ul.getZipcode();
 		List<String> services = ul.getServices();
-		int[] ip = {0, 1, 1, 1, 0, 1, 0, 1, 0, 1};
+		List<String> zipcodes = new ArrayList<String>();
+		
+		try{
+
+			StringBuilder result = new StringBuilder();
+		    URL url = new URL("https://www.zipcodeapi.com/rest/LapKZOoH0rcwVyfgQqrp0qvSBrlBbueXFEHEt6mtxz0t8fJYFboGBTydlUPxp3u4/radius.json/"+zipcode+"/5/mile");
+		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		    conn.setRequestMethod("GET");
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		    
+		    String line;
+		    while ((line = rd.readLine()) != null) {
+		       result.append(line);
+		    }
+		    String result2 = result.substring(13, result.length()-1);
+		    
+		    JSONParser obj = new JSONParser();
+		    JSONArray array = (JSONArray)obj.parse(result2); 
+
+		    for(int i=0; i<array.size(); i++){
+		        JSONObject jsonObj  = (JSONObject)array.get(i);
+		        System.out.println(jsonObj.get("zip_code"));
+		        zipcodes.add(jsonObj.get("zip_code").toString());
+		    }
+		    
+		    rd.close();
+		} catch(Exception e) {
+			System.out.println();
+		}
 		
 		Recommender rc = new Recommender();
-		rc.find_success("Restaurant", ip, "15120");
+		JSONObject prediction = rc.find_success("Restaurant", services, zipcode);
+		Double success_rate = (Double)prediction.get("PredictedSuccessRate");
+		Map<String, Double> other_success_rate = new TreeMap<String, Double>();
 		
+		for(int i = 0; i < zipcodes.size(); i++) {
+			
+			Recommender rc2 = new Recommender();
+			JSONObject temp = rc2.find_success("Restaurant", services, zipcodes.get(i));
+			Double temp_result = (Double)temp.get("PredictedSuccessRate");
+			if(temp_result > success_rate) {
+				
+				other_success_rate.put(zipcodes.get(i), temp_result);
+			}
+		}
 		
-		return null;
+		System.out.println("Suggestions : " + other_success_rate);
+		prediction.put("SuggestedZipcodes", other_success_rate);
+		return prediction;
 		
 	}
 	
