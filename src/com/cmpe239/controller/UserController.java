@@ -212,7 +212,7 @@ public class UserController {
 	
 	//Code to return userprofile
 	@RequestMapping("/userProfile/{userName:.*}")
-	public ModelAndView getUserProfileJSON(@PathVariable("userName") String name) throws Exception
+	public ModelAndView getUserProfileJSON(@PathVariable("userName") String name) 
 	{
 		System.out.println("nme "+name);
 		
@@ -220,7 +220,7 @@ public class UserController {
 		UserDaoImpl userDao = new UserDaoImpl();
 		UserEntity userProfile = userDao.validateUser(name);
 		JSONObject obj = new JSONObject();
-		JSONArray bussList = getUserRecommendations(userProfile.getUserID());
+		//JSONArray bussList = getUserRecommendations(userProfile.getUserID());
 		obj.put("userID", userProfile.getUserID());
 		obj.put("email", userProfile.getUseremail());
 		obj.put("recommdationList", bussList);
