@@ -446,15 +446,21 @@ prediction = new HashSet<String>();
 	public  void predict() {
 		
 		System.out.print("You should add services like: ");
+		int cnt = 0;
+		List<String> new_prediction = new ArrayList<String>();
 		for(String i: prediction) {
 			
 			System.out.print(i + ", ");
+			cnt++;
+			if(cnt < 4)
+				new_prediction.add(i);
 		}
 		System.out.println("\n");
 		
 		data.put("PredictedRating", predicted_rating);
 		data.put("PredictedSuccessRate", predicted_success_rate);
-		data.put("Prediction", prediction);
+		
+		data.put("Prediction", new_prediction);
 		
 		JSONArray pie_chart = new JSONArray();
 		String[] colors = {"#90a4ae", "#7986cb", "#9575cd", "#4db6ac", "#64b5f6", "#CC3399", "#990099", "#FF0066", "#FFFF99"};
