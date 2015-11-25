@@ -50,6 +50,13 @@ import com.fasterxml.jackson.core.JsonParser;
 @Controller
 public class BusinessController {
  
+	@RequestMapping(value="/showInfoGraphs",method = RequestMethod.GET )
+	public @ResponseBody ModelAndView  showInfoGraphs(){
+		
+		ModelAndView model = new ModelAndView("info-graphs");		
+		return model;
+	}
+	
 	@RequestMapping(value="/businessRecommendationResult",method = RequestMethod.POST )
 	public @ResponseBody JSONObject  posttest(@RequestBody final BusinessForm ul){
 		System.out.println("called Login "+ul.getBusinessName()+" "+ul.getBusinessType()+" "+ul.getZipcode() + " "+ul.getServices().get(0));

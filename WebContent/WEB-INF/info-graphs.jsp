@@ -157,7 +157,7 @@
             </li>
             <li><a href='#'>Pages</a>  <i class='fa fa-angle-right'></i>
             </li>
-            <li><a href='page-blank.html'>Blank</a>
+            <li><a href='page-blank.html'>Info-Graphs</a>
             </li>
           </ul>
         </div>
@@ -165,7 +165,30 @@
 
     </div>
     <!-- /Breadcrumb -->
-Here we go
+
+	<table>
+	<tr>
+	<td width=50%>
+	<img src="assets\Info_Graphs\Data_Classification.png" alt="Data Classification" width=500 height=400>
+	</td>
+	
+	<td width=50%>
+	<img src="assets\Info_Graphs\Business_Classification.png" alt="Data Classification" width=500 height=400>
+	</td>
+	</tr>
+	
+	<tr>
+	<td width=50%>
+	<img src="assets\Info_Graphs\Data_Classification2.png" alt="Data Classification" width=500 height=300>
+	</td>
+	
+	<td>
+	<img src="assets\Info_Graphs\Business_Distribution.png" alt="Data Classification" width=500 height=400>
+	</td>
+	</tr>
+	
+	</table>
+
   </section>
   <!-- /Main Content -->
 
