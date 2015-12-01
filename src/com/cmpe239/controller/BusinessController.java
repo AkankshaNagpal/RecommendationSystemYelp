@@ -63,6 +63,7 @@ public class BusinessController {
 		
 		String businessname = ul.getBusinessName();
 		String businesstype=ul.getBusinessType();
+		System.out.println("****Business Type: " + businesstype);
 		String zipcode = ul.getZipcode();
 		List<String> services = ul.getServices();
 		List<String> zipcodes = new ArrayList<String>();
@@ -70,7 +71,7 @@ public class BusinessController {
 		try{
 
 			StringBuilder result = new StringBuilder();
-		    URL url = new URL("https://www.zipcodeapi.com/rest/BurO3JJtkJq7fikHvdkk7T8EJvICXsNzWenZX7tiQUp6cKOIY9252bJMGroEUcdR/radius.json/"+zipcode+"/5/mile");
+		    URL url = new URL("https://www.zipcodeapi.com/rest/yNai5sdu8nzf98o3CIXOd1oKTMGRAvo9jzso1GSa3spcAOgdwd1Jequ7daZNGoXZ/radius.json/"+zipcode+"/5/mile");
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    conn.setRequestMethod("GET");
 		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -99,6 +100,7 @@ public class BusinessController {
 		JSONObject prediction = rc.find_success("Restaurant", services, zipcode);
 		Double success_rate = (Double)prediction.get("PredictedSuccessRate");
 		Map<String, Double> other_success_rate = new TreeMap<String, Double>();
+		JSONArray zipcodeList = new JSONArray();
 		
 		for(int i = 0; i < zipcodes.size(); i++) {
 			
@@ -108,11 +110,18 @@ public class BusinessController {
 			if(temp_result > success_rate) {
 				
 				other_success_rate.put(zipcodes.get(i), temp_result);
+				JSONObject obj = new JSONObject();
+				obj.put("zip", zipcodes.get(i));
+				obj.put("rate", temp_result);
+				//obj.put(zipcodes.get(i), temp_result);
+				zipcodeList.add(obj);
 			}
 		}
 		
-		System.out.println("Suggestions : " + other_success_rate);
-		prediction.put("SuggestedZipcodes", other_success_rate);
+		System.out.println("Suggestions : " + zipcodeList);
+		System.out.println("Suggestions Array List " + zipcodeList);
+		prediction.put("SuggestedZipcodes", zipcodeList);
+		//prediction.put("ZipArray", zipcodeList);
 		return prediction;
 		
 	}

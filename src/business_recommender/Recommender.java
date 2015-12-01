@@ -508,7 +508,7 @@ prediction = new HashSet<String>();
 					}
 				}
 				
-				op = restaurant_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\restaurant.csv", location);
+				op = restaurant_recommend(input, "/Users/akankshanagpal/Desktop/restaurant.csv", location);
 				predict();
 				break;
 				
@@ -521,7 +521,7 @@ prediction = new HashSet<String>();
 						input[(int) e.getKey()] = 1;
 					}
 				}
-				op = health_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\health.csv", location);
+				op = health_recommend(input, "/Users/akankshanagpal/Desktop/health.csv", location);
 				predict();
 				break;
 				
@@ -534,7 +534,7 @@ prediction = new HashSet<String>();
 						input[(int) e.getKey()] = 1;
 					}
 				}
-				op = pubsnbars_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\pubsbars.csv", location);
+				op = pubsnbars_recommend(input, "/Users/akankshanagpal/Desktop/pubsbars.csv", location);
 				predict();
 				break;
 				
@@ -547,7 +547,7 @@ prediction = new HashSet<String>();
 						input[(int) e.getKey()] = 1;
 					}
 				}
-				op = shopping_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\shopping.csv", location);
+				op = shopping_recommend(input, "/Users/akankshanagpal/Desktop/shopping.csv", location);
 				predict();
 				break;
 		}

@@ -60,7 +60,7 @@
         <li><a href="#!" class="search-bar-toggle"><i class="mdi-action-search"></i></a>
         </li>
         <li class="user">
-          <a class="dropdown-button" href="#!" data-activates="user-dropdown">
+          <a class="dropdown-button" data-activates="user-dropdown" onlcick="LogOut()">
             <img src="assets/_con/images/img30.png" alt="John Doe" class="circle">Logout<i class="mdi-navigation-expand-more right"></i>
           </a>
 
@@ -554,7 +554,7 @@ var htmlstar="<div class='rating'>"+
 			           o[this.name] = this.value || '';
 			       }
 			   });
-			   //alert(JSON.stringify(o));
+			 //  alert(JSON.stringify(o));
 			   $.ajax({
 				     type: "POST",
 				     contentType: 'application/json',
@@ -565,11 +565,13 @@ var htmlstar="<div class='rating'>"+
 				     crossDomain: true,
 				     success: function(data) {
 				         //alert('success-'+JSON.stringify(data));
-				         var zipappend;
-				         var suggistionappend;
-				         var sucessprogressbarappend;
+				         var zipappend="";
+				         var suggistionappend="";
+				         var sucessprogressbarappend="";
+				         var zipcodelen=data.SuggestedZipcodes.length;
+				        // alert(zipcodelen);
 				         var pridictionsuggest="";
-				         zipappend='<p>95112</p><div class=progress><div class="active striped bule" style=width:70%><span>70%</span></div></div>';
+				        // zipappend='<p>95112</p><div class=progress><div class="active striped bule" style=width:70%><span>70%</span></div></div>';
 				         suggistionappend='<h5>Suggestion</h5><p id=sugessionList>Dinner, Lunch etc</p>';
 				         //sucessprogressbarappend='<p>Predicted Rating: '+data.PredictedRating+'</p><div class="progress"><div class="active striped green" id="pridcitionWidth" style="width:'+data.PredictedSuccessRate+'%"><span id="spanText">'+data.PredictedSuccessRate+'%</span></div></div>';
 				         
@@ -580,7 +582,13 @@ var htmlstar="<div class='rating'>"+
 				        		 pridictionsuggest+='<p>'+data.Prediction[i]+'</p>'
 				        	 }
 				         }
-				         sucessprogressbarappend='<p>Predicted Rating: '+data.PredictedRating+'</p><div class="progress"><div class="active striped green" id="pridcitionWidth" style="width:'+data.PredictedSuccessRate+'%"><span id="spanText">'+data.PredictedSuccessRate+'%</span></div></div><p>Suggested Improvement:</p>'+pridictionsuggest;
+				         if(zipcodelen>0){
+				        	 
+				        for(var i=0;i<zipcodelen;i++){
+				 zipappend+='<p>'+data.SuggestedZipcodes[i].zip+'</p><div class=progress><div class="active striped bule" style=width:'+data.SuggestedZipcodes[i].rate.toFixed(2)+'%><span>'+data.SuggestedZipcodes[i].rate.toFixed(2)+'%</span></div></div>';
+				        	 }
+				         }
+				         sucessprogressbarappend='<p>Predicted Rating: '+data.PredictedRating.toFixed(2)+'</p><div class="progress"><div class="active striped green" id="pridcitionWidth" style="width:'+data.PredictedSuccessRate.toFixed(2)+'%"><span id="spanText">'+data.PredictedSuccessRate.toFixed(2)+'%</span></div></div><p>Suggested Improvement:</p>'+pridictionsuggest;
 				         $('#successProgressBar').empty();
 				         $('#successProgressBar').append(sucessprogressbarappend);
 				         $('#nearbyZip').empty();
@@ -596,6 +604,14 @@ var htmlstar="<div class='rating'>"+
 				     }
 				 });
 	 }
+    
+    function LogOut(){
+    	//alert("called");
+    	localStorage.userName=null;
+   	 localStorage.isNewUser=null;
+    	window.location.href="RecommendationSystemYelp";
+    }
+    
     function getServices(){
  	   var selectedopt=$("#businessType").val();
  	   switch(selectedopt) {
