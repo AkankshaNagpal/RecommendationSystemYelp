@@ -54,26 +54,7 @@
       <!-- /Logo -->
 
       <!-- Menu -->
-      <ul>
-        <li><a href="#!" class="search-bar-toggle"><i class="mdi-action-search"></i></a>
-        </li>
-        <li class="user">
-          <a class="dropdown-button" href="#!" data-activates="user-dropdown">
-            <img src="assets/_con/images/user.jpg" alt="John Doe" class="circle">Deep Mehta<i class="mdi-navigation-expand-more right"></i>
-          </a>
-
-          <ul id="user-dropdown" class="dropdown-content">
-            <li><a href="page-profile.html"><i class="fa fa-user"></i> Profile</a>
-            </li>
-            <li><a href="mail-inbox.html"><i class="fa fa-envelope"></i> Messages <span class="badge new">2</span></a>
-            </li>
-            
-            <li class="divider"></li>
-            <li><a href="page-sign-in.html"><i class="fa fa-sign-out"></i> Logout</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      
       <!-- /Menu -->
 
     </div>
@@ -106,30 +87,7 @@
     <div class="nano">
       <div class="nano-content">
 
-        <ul>
-          
-          <li class="label">Menu</li>
-          <li>
-            <a class="yay-sub-toggle waves-effect waves-blue"><i class="fa fa-dashboard"></i> Dashboards<span class="yay-collapse-icon mdi-navigation-expand-more"></span></a>
-            <ul>
-              <li>
-                <a href="dashboard.html" class="waves-effect waves-blue"> Dashboard</a>
-              </li>
-              <li>
-                <a href="dashboard-v1.html" class="waves-effect waves-blue"> Dashboard v1</a>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="widgets.html" class="waves-effect waves-blue"><i class="fa fa-magic"></i> Widgets</a>
-          </li>
-
-          <li>
-            <a href="layouts.html" class="waves-effect waves-blue"><i class="mdi mdi-av-web"></i> Layouts</a>
-          </li>
-                   
-        </ul>
+        
 
       </div>
     </div>
@@ -144,24 +102,7 @@
     <!-- Breadcrumb -->
     <div class="page-title">
 
-      <div class="row">
-        <div class="col s12 m9 l10">
-          <h1>Blank</h1>
-
-          <ul>
-            <li>
-              <a href="#"><i class="fa fa-home"></i> Home</a>  <i class="fa fa-angle-right"></i>
-            </li>
-
-            <li><a href='dashboard.html'>Dashboard</a>  <i class='fa fa-angle-right'></i>
-            </li>
-            <li><a href='#'>Pages</a>  <i class='fa fa-angle-right'></i>
-            </li>
-            <li><a href='page-blank.html'>Info-Graphs</a>
-            </li>
-          </ul>
-        </div>
-         </div>
+      
 
     </div>
     <!-- /Breadcrumb -->

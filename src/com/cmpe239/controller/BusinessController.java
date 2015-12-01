@@ -50,7 +50,7 @@ import com.fasterxml.jackson.core.JsonParser;
 @Controller
 public class BusinessController {
  
-	@RequestMapping(value="/showInfoGraphs",method = RequestMethod.GET )
+	@RequestMapping(value="/info",method = RequestMethod.GET )
 	public @ResponseBody ModelAndView  showInfoGraphs(){
 		
 		ModelAndView model = new ModelAndView("info-graphs");		
