@@ -19,5 +19,6 @@ public interface UserDao {
 	public User findByCustomerId(int userID);
 	public UserEntity validateUser(String userEmail);
 	public List<RecommendedItem> recommendedBusiness(int userID) throws Exception;
+	public List<String> getBusinessList(String location, String category) throws Exception;
 
 }

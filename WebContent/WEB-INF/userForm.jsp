@@ -53,28 +53,7 @@
       </a>
       <!-- /Logo -->
 
-      <!-- Menu -->
-      <ul>
-        <li><a href="#!" class="search-bar-toggle"><i class="mdi-action-search"></i></a>
-        </li>
-        <li class="user">
-          <a class="dropdown-button" href="#!" data-activates="user-dropdown">
-            <img src="assets/_con/images/user.jpg" alt="John Doe" class="circle">Deep Mehta<i class="mdi-navigation-expand-more right"></i>
-          </a>
-
-          <ul id="user-dropdown" class="dropdown-content">
-            <li><a href="page-profile.html"><i class="fa fa-user"></i> Profile</a>
-            </li>
-            <li><a href="mail-inbox.html"><i class="fa fa-envelope"></i> Messages <span class="badge new">2</span></a>
-            </li>
-            
-            <li class="divider"></li>
-            <li><a href="page-sign-in.html"><i class="fa fa-sign-out"></i> Logout</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <!-- /Menu -->
+     
 
     </div>
   </nav>
@@ -157,59 +136,59 @@
 <div class="row">
 <div class="col l3"></div>
 <div class="card-panel col l6"> 
-    <form >
+    <form id="userformsub" onsubmit="return false;" name="userformsub">
 	<!-- Location -->
-    <select name="" required>
+    <select name="city" id="city" >
               <option value="" disabled selected>Which City?</option>
-              <option value="press">Some City #1</option>
-              <option value="internet">Some City #2</option>
-              <option value="mouth">Some City #3</option>
-              <option value="other">Other...</option>
+              <option value="Pittsburgh">Pittsburgh</option>
+              <option value="Charlotte">Charlotte</option>
+              <option value="Anthem">Anthem</option>
+              <option value="Phoenix">Phoenix</option>
+              <option value="Edinburgh">Edinburgh</option>
+              <option value="Las Vegas">Las Vegas</option>
+              <option value="Tempe">Tempe</option>
+              <option value="Madison">Madison</option>
+              
+              
             </select>
     <!-- /location -->
     <!-- Gender -->
   <p>
-    <input name="radio-gender" type="radio" id="radio-gender-1" required />
+    <input name="gender" type="radio" id="radio-gender-1" value="male" />
     <label for="radio-gender-1">Male</label>
-    <input name="radio-gender" type="radio" id="radio-gender-2" />
+    <input name="gender" type="radio" id="radio-gender-2" value="female"/>
     <label for="radio-gender-2">Female</label>
   </p>
   <!-- /Gender -->
     <!-- Age -->
             <div class="input-field">
-              <input id="input-name" type="text" required>
+              <input id="age" type="text" name="age">
               <label for="input-name">Age</label>
             </div>
             <!-- /Age -->
     <!-- Zip Code -->
             <div class="input-field">
-              <input id="input-name" type="text" required>
+              <input id="input-name" type="text" name="zipcode">
               <label for="input-name">Zip Code</label>
             </div>
             <!-- /Zip Code -->
               <!-- Hobbies -->
-  <label class="pull-left">Types (2 minimum):</label>
-  <p>
-    <input name="check-hobbies" type="checkbox" id="check-skiing" value="skiing" data-parsley-mincheck="2" required />
-    <label for="check-skiing">Italian American</label>
-    <input name="check-hobbies" type="checkbox" id="check-running" value="running" />
-    <label for="check-running">Running</label>
-    <input name="check-hobbies" type="checkbox" id="check-eating" value="eating" />
-    <label for="check-eating">Eating</label>
-    <input name="check-hobbies" type="checkbox" id="check-sleeping" value="sleeping" />
-    <label for="check-sleeping">Sleeping</label>
-  </p>
-  <!-- /Hobbies -->
-    <!-- Heard -->
-            <select name="heard" required>
-              <option value="" disabled selected>Which Services Do You Provide</option>
-              <option value="press">Food</option>
-              <option value="internet">Internet</option>
-              <option value="mouth">Mobile</option>
-              <option value="other">Other...</option>
+  
+  <select name="preferences" id="preferences" >
+              <option value="" disabled selected>Select Preferences</option>
+              <option value="Restaurants">Restaurants</option>
+              <option value="Italian">Italian</option>
+              <option value="Food">Food</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bakery">Bakery</option>
+              
+              
+              
             </select>
-            <!-- /Heard -->
-    <button class="btn" type="submit" name="action">
+ 
+  <!-- /Hobbies -->
+    
+    <button class="btn"  onclick="signUP();">
       Submit <i class="mdi-content-send right"></i>
     </button>
 
@@ -221,95 +200,7 @@
   </section>
   <!-- /Main Content -->
 
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <div class="layer-overlay"></div>
-    <div class="layer-content">
-      <form action="#!">
-        <!-- Header -->
-        <a class="search-bar-toggle grey-text text-darken-2" href="#!"><i class="mdi-navigation-close"></i></a>
-
-        <!-- Search Input -->
-        <div class="input-field">
-          <i class="mdi-action-search prefix"></i>
-          <input type="text" name="con-search" placeholder="Search...">
-        </div>
-
-        <!-- Search Results -->
-        <div class="search-results">
-
-          <div class="row">
-            <div class="col s12 l4">
-              <h4>Users</h4>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user2.jpg" alt="Felecia Castro" class="circle photo">
-                <div class="title">Felecia Castro</div>
-                <div class="label">Content Manager</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user3.jpg" alt="Max Brooks" class="circle photo">
-                <div class="title">Max Brooks</div>
-                <div class="label">Programmer</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user4.jpg" alt="Patsy Griffin" class="circle photo">
-                <div class="title">Patsy Griffin</div>
-                <div class="label">Support</div>
-              </div>
-
-              <div class="each-result">
-                <img src="assets/_con/images/user6.jpg" alt="Vernon Garrett" class="circle photo">
-                <div class="title">Vernon Garrett</div>
-                <div class="label">Photographer</div>
-              </div>
-            </div>
-            <div class="col s12 l4">
-              <h4>Articles</h4>
-
-              <div class="each-result">
-                <div class="icon circle blue white-text">MD</div>
-                <div class="title">Material Design</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle teal white-text">
-                  <i class="fa fa-dashboard"></i>
-                </div>
-                <div class="title">Admin Dashboard</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle orange white-text">RD</div>
-                <div class="title">Responsive Design</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-
-              <div class="each-result">
-                <div class="icon circle red white-text">
-                  <i class="fa fa-tablet"></i>
-                </div>
-                <div class="title">Mobile First</div>
-                <div class="label nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi consequatur debitis veritatis dolorum, enim libero!</div>
-              </div>
-            </div>
-            <div class="col s12 l4">
-              <h4>Posts</h4>
-
-              <div class="no-result">No results were found ;(</div>
-            </div>
-          </div>
-
-        </div>
-
-      </form>
-    </div>
-  </div>
-  <!-- /Search Bar -->
+  
 
 
 
@@ -340,4 +231,34 @@
   <script type="text/javascript" src="assets/_con/js/_con.min.js"></script>
 
 </body>
+<script>
+function signUP(){
+	var city=$("#city").val();
+	var pref=$("#preferences").val();
+	localStorage.city=city;
+	localStorage.pref=pref;
+	  // alert("City "+localStorage.city+" pref-"+localStorage.pref);
+	   window.location.href="UserDashboard";
+	   
+	  /*$.ajax({
+		     type: "POST",
+		     contentType: 'application/json',
+		     url: "newUserForm",
+		     dataType: 'json',
+		     data: JSON.stringify(o),
+		     async: false,
+		     crossDomain: true,
+		     success: function(data) {
+		         alert('success-'+JSON.stringify(data));
+		         window.location.href="UserDashboard";
+		         
+		     },
+		     error: function(response, text, err) {
+		         alert("r "+JSON.stringify(response)+" text -"+text+" error"+err);
+		     }
+		 });*/
+	   
+	
+}
+</script>
 </html>

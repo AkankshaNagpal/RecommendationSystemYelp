@@ -48,6 +48,7 @@ public class UserController {
 	@RequestMapping("*")
 	public ModelAndView index()
 	{
+		//System.out.println("Deep in *");
 		ModelAndView model = new ModelAndView("index");
 		
 		return model;
@@ -79,6 +80,20 @@ public class UserController {
 		
 	}
 	
+	/*
+	 * User form page
+	 */
+	@RequestMapping("/userForm")
+	public ModelAndView userform()
+	{
+		
+		ModelAndView model = new ModelAndView("userForm");
+	
+		return model;
+		
+	}
+	
+	
 	@RequestMapping("/hi")
 	public ModelAndView hiWorld()
 	{
@@ -104,6 +119,14 @@ public class UserController {
 		ul.setUserName("Deep");
 		ul.setUserType("User");
 		return ul;
+	}
+	@RequestMapping(value="/newUserForm",method = RequestMethod.POST )
+	public @ResponseBody UserLoginSucess  newUserForm(@RequestBody final newUserForm ul){
+		System.out.println("new user");
+		System.out.println("city"+ul.getCity()+" gender"+ul.getGender()+" age"+ul.getAge()+" zip"+ul.getZipcode()+" preference"+ul.getPreferences()+" ");
+		
+		UserLoginSucess uls=new UserLoginSucess();
+		return uls;
 	}
 	@RequestMapping(value="/login",method = RequestMethod.POST )
 	public @ResponseBody UserLoginSucess  posttest(@RequestBody final UserLogin ul){
@@ -235,6 +258,34 @@ public class UserController {
 		return model;
 	}
 	
+	@RequestMapping("/newuserProfile/{userName:.*}/{city}/{pref}")
+	public ModelAndView getNewUserProfileJSON(@PathVariable("userName") String name,@PathVariable("city") String cityName,@PathVariable("pref") String prefName) throws Exception
+	{
+		System.out.println("nme "+name);
+		System.out.println(""+name+" city-"+cityName+" pred"+prefName);
+		
+		ModelAndView model = new ModelAndView("jsonTemplate");
+		UserDaoImpl userDao = new UserDaoImpl();
+		UserEntity userProfile = userDao.validateUser(name);
+		JSONObject obj = new JSONObject();
+		JSONArray bussList = getNewUserRecommendations(cityName,prefName);
+		
+		obj.put("userID", userProfile.getUserID());
+		obj.put("email", userProfile.getUseremail());
+		obj.put("recommdationList", bussList);
+		obj.put("yelpID", userProfile.getYelpID());
+		obj.put("email", userProfile.getUseremail());
+		obj.put("fans", userProfile.getFans());
+		obj.put("yelping_since", userProfile.getYelpingSince());
+		obj.put("type", userProfile.getUsertype());
+		obj.put("password", userProfile.getPassword());
+		model.addObject("user",obj);
+		
+		return model;
+	}
+	
+	
+	
 	
 	public JSONArray getUserRecommendations(int userID) throws Exception
 	{
@@ -266,40 +317,41 @@ public class UserController {
 		return list;
 	}
 	
-	/*
-	@RequestMapping("/BussinessRecommendations")
-	public ModelAndView getBusinessRecommendations() throws Exception
+	
+	public JSONArray getNewUserRecommendations(String cityName,String preType ) throws Exception
 	{
-		ModelAndView model = new ModelAndView("BussRecommendations");
-		UserDaoImpl userDao = new UserDaoImpl();
-		List<String> recomm = userDao.getBusinessList("phoneix", "food");
-		model.addObject("Business1",recomm.get(0));
-		return model;
-	}*/
-	
-	
-	
-	
-	
-	
-
-	/*@RequestMapping(value="/businessRecommendationResult",method = RequestMethod.POST )
-	public @ResponseBody BusinessSuccess  posttest(@RequestBody final BusinessForm ul){
-		System.out.println("called Login "+ul.getBusinessName()+" "+ul.getBusinessType()+" "+ul.getZipcode() + " "+ul.getServices().get(0));
 		
-		//UserLogin uls=new UserLogin();
-		String businessname = ul.getBusinessName();
-		String businesstype=ul.getBusinessType();
-		String zipcode = ul.getZipcode();
-		List<String> services = ul.getServices();
-		int[] ip = {0, 1, 1, 1, 0, 1, 0, 1, 0, 1};
+		UserDaoImpl us = new UserDaoImpl();
+		BusinessdaoImpl bussDao = new BusinessdaoImpl();
 		
-		Recommender rc = new Recommender();
-		rc.find_success("Restaurant", ip, "15120");
+		List<String> bList = new ArrayList<String>();
+		String city = cityName;
+		String preference = preType;
+		bList = us.getBusinessList(city, preference);
 		
+		System.out.println("Business List :"+bList);
 		
-		return null;
+		JSONArray list = new JSONArray();
 		
-	}*/
+		for(int i =0; i<bList.size();i++)
+		{
+		JSONObject obj = new JSONObject();
+		String yelpBid = bList.get(i);
+		//String yelpBusinessID = bussDao.
+		String name = bussDao.getBusinessName(yelpBid);
+		String location = bussDao.getBusinessLocation(yelpBid);
+		String stars = bussDao.getBusinessStars(yelpBid);
+		obj.put("name",name);
+		obj.put("address",location);
+		obj.put("yelpBussinessID",yelpBid);
+		obj.put("stars",stars);
+		list.add(obj);
+		}
+		  System.out.print(list);
+	
+		//model.addObject("bussList",list);
+		return list;
+	
+	}
 	
 }

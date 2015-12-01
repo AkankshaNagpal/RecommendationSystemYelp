@@ -308,7 +308,7 @@ $('.form-control').on('focus blur', function (e) {
 			           o[this.name] = this.value || '';
 			       }
 			   });
-			   alert(JSON.stringify(o));
+			  // alert(JSON.stringify(o));
 			   $.ajax({
 				     type: "POST",
 				     contentType: 'application/json',
@@ -318,12 +318,13 @@ $('.form-control').on('focus blur', function (e) {
 				     async: false,
 				     crossDomain: true,
 				     success: function(data) {
-				         alert('success-'+JSON.stringify(data));
+				        // alert('success-'+JSON.stringify(data));
 				         if(data.message=="success"){
 				        	 //alert("success");
 				        	 //if(data.)
 				        	localStorage.userName=data.userID;
-				        	 window.location.href="UserDashboard";
+				        	 localStorage.isNewUser="true";
+				        	 window.location.href="userForm";
 				         }else{
 				        	 alert(data.message);
 				         }
@@ -351,7 +352,7 @@ $('.form-control').on('focus blur', function (e) {
 			           o[this.name] = this.value || '';
 			       }
 			   });
-			   alert(JSON.stringify(o));
+			   //alert(JSON.stringify(o));
 			   $.ajax({
 				     type: "POST",
 				     contentType: 'application/json',
@@ -361,11 +362,13 @@ $('.form-control').on('focus blur', function (e) {
 				     async: false,
 				     crossDomain: true,
 				     success: function(data) {
-				         alert('success-'+JSON.stringify(data));
+				         //alert('success-'+JSON.stringify(data));
 				         if(data.message=="success"){
 				        	 //alert("success");
 				        	 //if(data.)
 				        	localStorage.userName=data.userID;
+				        	
+				        	 localStorage.isNewUser="false";
 				        	 window.location.href="UserDashboard";
 				         }else{
 				        	 alert(data.message);
