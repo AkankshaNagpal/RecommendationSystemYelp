@@ -198,13 +198,15 @@ public class Recommender {
 							if(splitted_ip[i+3].equals("1"))
 								cnt++;
 						}
-						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[5]) > 4)
-							prediction.add(restaurant_attributes.get(i+1));
+						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[5]) > 4) {
+							System.out.println(ip[i] + " = " + health_attributes.get(i+1) + " not present");
+							prediction.add(health_attributes.get(i+1));
+						}
 					}
 					
 					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[5]));
 					b_id++;
-					pie_graph.put(Double.parseDouble(splitted_ip[5]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					pie_graph.put(Double.parseDouble(splitted_ip[5]), pie_graph.get(Double.parseDouble(splitted_ip[5]))+1);
 					
 					List<Double> temp_list = new ArrayList<Double>();
 					temp_list.add((double)cnt);
@@ -221,7 +223,7 @@ public class Recommender {
 			for(Entry<String, List<Double>> e : op.entrySet()) {
 				
 				//System.out.println(e.getKey() + ": " + e.getValue()[0] + ", " + e.getValue()[1]);
-				if(e.getValue().get(0) > 1) {
+				if(e.getValue().get(0) > 0) {
 					
 					rating[m++]  = e.getValue().get(1);
 				}
@@ -284,7 +286,7 @@ public class Recommender {
 								cnt++;
 						}
 						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[6]) > 4)
-							prediction.add(restaurant_attributes.get(i+1));
+							prediction.add(pubsnbars_attributes.get(i+1));
 					}
 					
 					switch(splitted_ip[5]) {
@@ -312,7 +314,7 @@ public class Recommender {
 					
 					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[6]));
 					b_id++;
-					pie_graph.put(Double.parseDouble(splitted_ip[6]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					pie_graph.put(Double.parseDouble(splitted_ip[6]), pie_graph.get(Double.parseDouble(splitted_ip[6]))+1);
 					
 					List<Double> temp_list = new ArrayList<Double>();
 					temp_list.add((double)cnt);
@@ -393,12 +395,12 @@ prediction = new HashSet<String>();
 								cnt++;
 						}
 						else if(ip[i] == 0 && Double.parseDouble(splitted_ip[7]) > 4)
-							prediction.add(restaurant_attributes.get(i+1));
+							prediction.add(shopping_attributes.get(i+1));
 					}
 					
 					line_graph_map.put(b_id,  Double.parseDouble(splitted_ip[7]));
 					b_id++;
-					pie_graph.put(Double.parseDouble(splitted_ip[7]), pie_graph.get(Double.parseDouble(splitted_ip[14]))+1);
+					pie_graph.put(Double.parseDouble(splitted_ip[7]), pie_graph.get(Double.parseDouble(splitted_ip[7]))+1);
 					
 					List<Double> temp_list = new ArrayList<Double>();
 					temp_list.add((double)cnt);
@@ -443,7 +445,7 @@ prediction = new HashSet<String>();
 		return op;
 	}
 	
-	public  void predict() {
+	public void predict(int max) {
 		
 		System.out.print("You should add services like: ");
 		int cnt = 0;
@@ -452,7 +454,7 @@ prediction = new HashSet<String>();
 			
 			System.out.print(i + ", ");
 			cnt++;
-			if(cnt < 4)
+			if(cnt < max)
 				new_prediction.add(i);
 		}
 		System.out.println("\n");
@@ -494,6 +496,7 @@ prediction = new HashSet<String>();
 	public  JSONObject find_success(String category, List<String> ip, String location) {
 		
 		Map<String, List<Double>> op;
+		System.out.println("Inputs : " + ip);
 		
 		System.out.println("\nCategory : " + category);
 		switch(category) {
@@ -508,47 +511,47 @@ prediction = new HashSet<String>();
 					}
 				}
 				
-				op = restaurant_recommend(input, "/Users/akankshanagpal/Desktop/restaurant.csv", location);
-				predict();
+				op = restaurant_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\restaurant.csv", location);
+				predict(5);
 				break;
 				
 			case "Health":
 				input = new int[2];
-				for(Entry e:restaurant_attributes.entrySet()) {
+				for(Entry e:health_attributes.entrySet()) {
 					
 					if(ip.contains(e.getValue())) {
 						
-						input[(int) e.getKey()] = 1;
+						input[(int) e.getKey()-1] = 1;
 					}
 				}
-				op = health_recommend(input, "/Users/akankshanagpal/Desktop/health.csv", location);
-				predict();
+				op = health_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\health.csv", location);
+				predict(1);
 				break;
 				
 			case "Pubs and Bars":
 				input = new int[3];
-				for(Entry e:restaurant_attributes.entrySet()) {
+				for(Entry e:pubsnbars_attributes.entrySet()) {
 					
 					if(ip.contains(e.getValue())) {
 						
-						input[(int) e.getKey()] = 1;
+						input[(int) e.getKey()-1] = 1;
 					}
 				}
-				op = pubsnbars_recommend(input, "/Users/akankshanagpal/Desktop/pubsbars.csv", location);
-				predict();
+				op = pubsnbars_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\pubsbars.csv", location);
+				predict(2);
 				break;
 				
 			case "Shopping":
 				input = new int[4];
-				for(Entry e:restaurant_attributes.entrySet()) {
+				for(Entry e:shopping_attributes.entrySet()) {
 					
 					if(ip.contains(e.getValue())) {
 						
-						input[(int) e.getKey()] = 1;
+						input[(int) e.getKey()-1] = 1;
 					}
 				}
-				op = shopping_recommend(input, "/Users/akankshanagpal/Desktop/shopping.csv", location);
-				predict();
+				op = shopping_recommend(input, "F:\\SEM III\\CMPE_239\\Project\\RecommendationSystemYelp\\src\\business_recommender\\shopping.csv", location);
+				predict(2);
 				break;
 		}
 		

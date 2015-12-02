@@ -71,7 +71,7 @@ public class BusinessController {
 		try{
 
 			StringBuilder result = new StringBuilder();
-		    URL url = new URL("https://www.zipcodeapi.com/rest/yNai5sdu8nzf98o3CIXOd1oKTMGRAvo9jzso1GSa3spcAOgdwd1Jequ7daZNGoXZ/radius.json/"+zipcode+"/5/mile");
+		    URL url = new URL("https://www.zipcodeapi.com/rest/wwAuoZcEf4j1aYn01LE18xOfaaczzvH61hAqgN5wRpx1nV2pGGqPde5ophYYNF4P/radius.json/"+zipcode+"/5/mile");
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    conn.setRequestMethod("GET");
 		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -97,7 +97,7 @@ public class BusinessController {
 		}
 		
 		Recommender rc = new Recommender();
-		JSONObject prediction = rc.find_success("Restaurant", services, zipcode);
+		JSONObject prediction = rc.find_success(businesstype, services, zipcode);
 		Double success_rate = (Double)prediction.get("PredictedSuccessRate");
 		Map<String, Double> other_success_rate = new TreeMap<String, Double>();
 		JSONArray zipcodeList = new JSONArray();
@@ -105,7 +105,7 @@ public class BusinessController {
 		for(int i = 0; i < zipcodes.size(); i++) {
 			
 			Recommender rc2 = new Recommender();
-			JSONObject temp = rc2.find_success("Restaurant", services, zipcodes.get(i));
+			JSONObject temp = rc2.find_success(businesstype, services, zipcodes.get(i));
 			Double temp_result = (Double)temp.get("PredictedSuccessRate");
 			if(temp_result > success_rate) {
 				
