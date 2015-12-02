@@ -147,7 +147,7 @@
               <option value="Edinburgh">Edinburgh</option>
               <option value="Las Vegas">Las Vegas</option>
               <option value="Tempe">Tempe</option>
-              <option value="Madison">Madison</option>
+             
               
               
             </select>
@@ -180,7 +180,7 @@
               <option value="Italian">Italian</option>
               <option value="Food">Food</option>
               <option value="Shopping">Shopping</option>
-              <option value="Bakery">Bakery</option>
+              
               
               
               
